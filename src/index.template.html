@@ -28,6 +28,9 @@ video{width:100%;max-height:45vh;background:#000;border-radius:8px;object-fit:co
 .barw{height:10px;background:#2c333d;border-radius:5px;overflow:hidden;margin:8px 0}
 #r-bar{height:100%;width:0;background:#2ecc71}
 #grid{width:100%;image-rendering:pixelated;border-radius:6px;background:#1b2028;max-height:30vh;object-fit:contain}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}
+th,td{border:1px solid #2c333d;padding:4px 8px;text-align:left}
+th{background:#1b2028;color:#a8b0bd}
 </style>
 </head>
 <body>
@@ -37,10 +40,11 @@ video{width:100%;max-height:45vh;background:#000;border-radius:8px;object-fit:co
 
 <section id="panel-send">
 <div id="s-warn" class="warn" hidden>This browser has no CompressionStream, so files are sent uncompressed.</div>
-<div class="row"><input type="file" id="s-file"><button class="b" id="s-test">50 KB test file</button></div>
+<div class="row"><input type="file" id="s-file"><button class="b" id="s-test">50 KB test file</button><button class="b" id="s-bench">Benchmark sweep</button></div>
 <div class="row">
 <label>Block size <select id="s-bs"><option value="400">400 B (safest)</option><option value="800" selected>800 B</option><option value="1400">1400 B</option><option value="2000">2000 B (fastest, needs steady phone)</option></select></label>
-<label>FPS <select id="s-fps"><option>4</option><option>6</option><option selected>8</option><option>10</option><option>12</option><option>15</option></select></label>
+<label>Codes/s per lane <select id="s-fps"><option>4</option><option>6</option><option selected>8</option><option>10</option><option>12</option><option>15</option></select></label>
+<label>Lanes <select id="s-lanes"><option value="1" selected>1</option><option value="2">2 (landscape, fullscreen)</option></select></label>
 <label>Error correction <select id="s-ecc"><option value="L" selected>L (dense, fast)</option><option value="M">M (sturdier)</option></select></label>
 </div>
 <div class="info" id="s-info">Choose a file.</div>
@@ -52,11 +56,15 @@ video{width:100%;max-height:45vh;background:#000;border-radius:8px;object-fit:co
 <section id="panel-recv" hidden>
 <div id="r-warn" class="warn" hidden>Camera access needs HTTPS. Open this page from its HTTPS address on your phone.</div>
 <div class="row"><label>Camera <select id="r-res"><option value="720" selected>720p</option><option value="1080">1080p (dense codes)</option></select></label>
-<button class="b primary" id="r-start">Start camera</button><button class="b" id="r-stop" hidden>Stop camera</button><button class="b" id="r-reset">Reset</button></div>
+<label><input type="checkbox" id="r-bench"> Benchmark mode (keep scanning after each file)</label></div>
+<div class="row"><button class="b primary" id="r-start">Start camera</button><button class="b" id="r-stop" hidden>Stop camera</button><button class="b" id="r-reset">Reset</button></div>
 <video id="video" muted playsinline></video>
 <div class="barw"><div id="r-bar"></div></div>
 <div class="info" id="r-status">Camera off.</div>
+<div class="info" id="r-stats"></div>
 <canvas id="grid" width="1" height="1"></canvas>
+<div id="r-hist"></div>
+<button class="b" id="r-clear" hidden>Clear results</button>
 <div id="r-result" hidden>
 <div class="info" id="r-done"></div>
 <div class="row"><a class="b" id="r-dl" href="#">Download</a><button class="b" id="r-share" hidden>Share / save</button></div>
