@@ -1,0 +1,14 @@
+{
+  "name": "qr-transfer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-file offline file transfer via animated QR codes",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test/core.test.cjs"
+  },
+  "dependencies": {
+    "jsqr": "1.4.0",
+    "qrcode-generator": "2.0.4"
+  }
+}
